@@ -39,13 +39,9 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabInterp = new System.Windows.Forms.TabPage();
-            this.tabRaw = new System.Windows.Forms.TabPage();
             this.lblinterp = new System.Windows.Forms.Label();
+            this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.menuStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabInterp.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -55,7 +51,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1078, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1390, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -108,9 +104,9 @@
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 681);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 758);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1078, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1390, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -119,7 +115,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
             this.treeView1.Location = new System.Drawing.Point(0, 28);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(242, 653);
+            this.treeView1.Size = new System.Drawing.Size(242, 730);
             this.treeView1.TabIndex = 2;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -127,57 +123,43 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(242, 28);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 653);
+            this.splitter1.Size = new System.Drawing.Size(3, 730);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabInterp);
-            this.tabControl1.Controls.Add(this.tabRaw);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(245, 28);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(833, 653);
-            this.tabControl1.TabIndex = 4;
-            // 
-            // tabInterp
-            // 
-            this.tabInterp.Controls.Add(this.lblinterp);
-            this.tabInterp.Location = new System.Drawing.Point(4, 25);
-            this.tabInterp.Name = "tabInterp";
-            this.tabInterp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInterp.Size = new System.Drawing.Size(825, 624);
-            this.tabInterp.TabIndex = 0;
-            this.tabInterp.Text = "Interpreted";
-            this.tabInterp.UseVisualStyleBackColor = true;
-            // 
-            // tabRaw
-            // 
-            this.tabRaw.Location = new System.Drawing.Point(4, 25);
-            this.tabRaw.Name = "tabRaw";
-            this.tabRaw.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRaw.Size = new System.Drawing.Size(825, 624);
-            this.tabRaw.TabIndex = 1;
-            this.tabRaw.Text = "Raw";
-            this.tabRaw.UseVisualStyleBackColor = true;
-            // 
             // lblinterp
             // 
-            this.lblinterp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblinterp.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblinterp.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblinterp.Location = new System.Drawing.Point(3, 3);
+            this.lblinterp.Location = new System.Drawing.Point(245, 28);
             this.lblinterp.Name = "lblinterp";
-            this.lblinterp.Size = new System.Drawing.Size(819, 618);
-            this.lblinterp.TabIndex = 0;
+            this.lblinterp.Size = new System.Drawing.Size(1145, 85);
+            this.lblinterp.TabIndex = 5;
+            // 
+            // hexBox1
+            // 
+            this.hexBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.hexBox1.ColumnInfoVisible = true;
+            this.hexBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hexBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox1.GroupSeparatorVisible = true;
+            this.hexBox1.LineInfoVisible = true;
+            this.hexBox1.Location = new System.Drawing.Point(245, 113);
+            this.hexBox1.Name = "hexBox1";
+            this.hexBox1.ReadOnly = true;
+            this.hexBox1.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
+            this.hexBox1.Size = new System.Drawing.Size(1145, 645);
+            this.hexBox1.StringViewVisible = true;
+            this.hexBox1.TabIndex = 6;
+            this.hexBox1.VScrollBarVisible = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1078, 703);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(1390, 780);
+            this.Controls.Add(this.hexBox1);
+            this.Controls.Add(this.lblinterp);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.statusStrip1);
@@ -187,8 +169,6 @@
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabInterp.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,10 +187,8 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabInterp;
-        private System.Windows.Forms.TabPage tabRaw;
         private System.Windows.Forms.Label lblinterp;
+        private Be.Windows.Forms.HexBox hexBox1;
     }
 }
 
