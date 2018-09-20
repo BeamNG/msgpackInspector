@@ -34,7 +34,7 @@ namespace MsgPack.Serialization
 	public class BindingOptions
 	{
 		/// <summary>
-		/// Private mapping of types & their member skip list, which needs to ignore as part of serialization.
+		/// Private mapping of types their member skip list, which needs to ignore as part of serialization.
 		/// </summary>
 		private readonly IDictionary<Type, IEnumerable<string>> typeIgnoringMembersMap = new Dictionary<Type, IEnumerable<string>>();
 
