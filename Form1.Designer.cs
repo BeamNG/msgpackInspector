@@ -40,10 +40,12 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabInterp = new System.Windows.Forms.TabPage();
+            this.tabRaw = new System.Windows.Forms.TabPage();
+            this.lblinterp = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabInterp.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -72,30 +74,30 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
             this.openToolStripMenuItem.Text = "Open ...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
             this.closeToolStripMenuItem.Text = "Close";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(130, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -119,6 +121,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(242, 653);
             this.treeView1.TabIndex = 2;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // splitter1
             // 
@@ -130,8 +133,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabInterp);
+            this.tabControl1.Controls.Add(this.tabRaw);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(245, 28);
             this.tabControl1.Name = "tabControl1";
@@ -139,25 +142,35 @@
             this.tabControl1.Size = new System.Drawing.Size(833, 653);
             this.tabControl1.TabIndex = 4;
             // 
-            // tabPage1
+            // tabInterp
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(825, 624);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabInterp.Controls.Add(this.lblinterp);
+            this.tabInterp.Location = new System.Drawing.Point(4, 25);
+            this.tabInterp.Name = "tabInterp";
+            this.tabInterp.Padding = new System.Windows.Forms.Padding(3);
+            this.tabInterp.Size = new System.Drawing.Size(825, 624);
+            this.tabInterp.TabIndex = 0;
+            this.tabInterp.Text = "Interpreted";
+            this.tabInterp.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tabRaw
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(825, 624);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabRaw.Location = new System.Drawing.Point(4, 25);
+            this.tabRaw.Name = "tabRaw";
+            this.tabRaw.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRaw.Size = new System.Drawing.Size(825, 624);
+            this.tabRaw.TabIndex = 1;
+            this.tabRaw.Text = "Raw";
+            this.tabRaw.UseVisualStyleBackColor = true;
+            // 
+            // lblinterp
+            // 
+            this.lblinterp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblinterp.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblinterp.Location = new System.Drawing.Point(3, 3);
+            this.lblinterp.Name = "lblinterp";
+            this.lblinterp.Size = new System.Drawing.Size(819, 618);
+            this.lblinterp.TabIndex = 0;
             // 
             // Form1
             // 
@@ -175,6 +188,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabInterp.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,8 +208,9 @@
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabInterp;
+        private System.Windows.Forms.TabPage tabRaw;
+        private System.Windows.Forms.Label lblinterp;
     }
 }
 
