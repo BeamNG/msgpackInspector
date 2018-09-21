@@ -130,11 +130,14 @@ namespace msgpackinspector
             }
 
             string s = "Element " + e.Node.Name + " - ";
-            if(td.mpo.UnderlyingType == typeof(System.Int32))
+            if (td.mpo.UnderlyingType == typeof(System.Int32))
             {
                 Int32 i = td.mpo.AsInt32();
                 s += string.Format("Int32 :  0x{0:X2} : {0:d}", i);
-            } else
+            } else if (td.mpo.UnderlyingType == typeof(byte[])) {
+                s += string.Format("Buffer:  0x{0:X4} to 0x{1:X4} [{2:d} bytes]", td.byteStart, td.byteEnd, td.byteEnd - td.byteStart);
+            }
+            else
             {
                 s += td.mpo.UnderlyingType.ToString().Replace("System.", "") + ": " + td.mpo.ToString();
             }
@@ -159,9 +162,14 @@ namespace msgpackinspector
                 if(pos >= en.Value.byteStart && pos <= en.Value.byteEnd)
                 {
                     ignoreSelect = true;
-                    if (treeView1.SelectedNode != null) treeView1.SelectedNode.BackColor = Color.White;
+                    if (treeView1.SelectedNode != null)
+                    {
+                        treeView1.SelectedNode.ForeColor = Color.Black;
+                        treeView1.SelectedNode.BackColor = Color.White;
+                    }
                     treeView1.SelectedNode = treeView1.Nodes[en.Key];
-                    treeView1.SelectedNode.BackColor = Color.CornflowerBlue;
+                    treeView1.SelectedNode.ForeColor = Color.White;
+                    treeView1.SelectedNode.BackColor = SystemColors.Highlight;
                     ignoreSelect = false;
                     return;
                 }
@@ -170,7 +178,11 @@ namespace msgpackinspector
 
         private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            if (treeView1.SelectedNode != null) treeView1.SelectedNode.BackColor = Color.White;
+            if (treeView1.SelectedNode != null)
+            {
+                treeView1.SelectedNode.ForeColor = Color.Black;
+                treeView1.SelectedNode.BackColor = Color.White;
+            }
         }
     }
 }

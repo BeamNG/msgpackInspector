@@ -115,6 +115,8 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
             this.treeView1.Location = new System.Drawing.Point(0, 28);
             this.treeView1.Name = "treeView1";
+            this.treeView1.PathSeparator = "/";
+            this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(242, 730);
             this.treeView1.TabIndex = 2;
             this.treeView1.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeSelect);
@@ -142,7 +144,7 @@
             this.hexBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.hexBox1.ColumnInfoVisible = true;
             this.hexBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hexBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox1.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hexBox1.GroupSeparatorVisible = true;
             this.hexBox1.LineInfoVisible = true;
             this.hexBox1.Location = new System.Drawing.Point(245, 113);
