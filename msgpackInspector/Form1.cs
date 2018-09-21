@@ -117,9 +117,11 @@ namespace msgpackinspector
             Application.Exit();
         }
 
+        private bool ignoreSelect = false;
+
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            Debug.WriteLine(e.Node.Name);
+            //Debug.WriteLine(e.Node.Name);
             TreeData td = entries[e.Node.Name];
             if (td.mpo.IsNil)
             {
@@ -127,20 +129,48 @@ namespace msgpackinspector
                 return;
             }
 
-            string s = "";
+            string s = "Element " + e.Node.Name + " - ";
             if(td.mpo.UnderlyingType == typeof(System.Int32))
             {
                 Int32 i = td.mpo.AsInt32();
-                s = string.Format("Int32 :  0x{0:X2} : {0:d}", i);
+                s += string.Format("Int32 :  0x{0:X2} : {0:d}", i);
             } else
             {
-                s = td.mpo.UnderlyingType + " - " + td.mpo.ToString();
+                s += td.mpo.UnderlyingType.ToString().Replace("System.", "") + ": " + td.mpo.ToString();
             }
             lblinterp.Text = s;
 
-            hexBox1.Select(td.byteStart, td.byteEnd - td.byteStart);
-            hexBox1.ScrollByteIntoView(td.byteStart);
-            hexBox1.Invalidate();
+            if (!ignoreSelect)
+            {
+                ignoreSelect = true;
+                hexBox1.Select(td.byteStart, td.byteEnd - td.byteStart);
+                hexBox1.ScrollByteIntoView(td.byteStart);
+                ignoreSelect = false;
+            }
+            //hexBox1.Invalidate();
+        }
+
+        private void hexBox1_SelectionStartChanged(object sender, EventArgs e)
+        {
+            if (ignoreSelect) return;
+            long pos = hexBox1.SelectionStart;
+            foreach (KeyValuePair<string, TreeData> en in entries)
+            {
+                if(pos >= en.Value.byteStart && pos <= en.Value.byteEnd)
+                {
+                    ignoreSelect = true;
+                    if (treeView1.SelectedNode != null) treeView1.SelectedNode.BackColor = Color.White;
+                    treeView1.SelectedNode = treeView1.Nodes[en.Key];
+                    treeView1.SelectedNode.BackColor = Color.CornflowerBlue;
+                    ignoreSelect = false;
+                    return;
+                }
+            }
+        }
+
+        private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (treeView1.SelectedNode != null) treeView1.SelectedNode.BackColor = Color.White;
         }
     }
 }

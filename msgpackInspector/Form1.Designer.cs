@@ -117,6 +117,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(242, 730);
             this.treeView1.TabIndex = 2;
+            this.treeView1.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeSelect);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // splitter1
@@ -152,6 +153,7 @@
             this.hexBox1.StringViewVisible = true;
             this.hexBox1.TabIndex = 6;
             this.hexBox1.VScrollBarVisible = true;
+            this.hexBox1.SelectionStartChanged += new System.EventHandler(this.hexBox1_SelectionStartChanged);
             // 
             // Form1
             // 
