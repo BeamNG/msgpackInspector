@@ -269,5 +269,10 @@ namespace msgpackinspector
             }
             toolStripStatusLabel1.Text = st;
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/BeamNG/msgpackInspector");
+        }
     }
 }
