@@ -103,6 +103,7 @@ namespace msgpackinspector
                 i++;
                 pos = u.Offset;
             }
+            toolStripStatusLabel1.Text = "Loaded file " + filename + " with " + i.ToString() + " entries";
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -183,6 +184,19 @@ namespace msgpackinspector
                 treeView1.SelectedNode.ForeColor = Color.Black;
                 treeView1.SelectedNode.BackColor = Color.White;
             }
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            entries.Clear();
+            treeView1.Nodes.Clear();
+            hexBox1.Clear();
+            toolStripStatusLabel1.Text = "Closed file";
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

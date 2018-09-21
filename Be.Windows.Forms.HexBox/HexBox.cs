@@ -1724,6 +1724,13 @@ namespace Be.Windows.Forms
         }
         List<ColorRange> colorRanges = new List<ColorRange>();
 
+        public void Clear()
+        {
+            colorRanges.Clear();
+            ByteProvider = null;
+            Invalidate();
+        }
+
         public void resetRangeColors()
         {
             colorRanges.Clear();
