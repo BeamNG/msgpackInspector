@@ -1715,7 +1715,32 @@ namespace Be.Windows.Forms
 			ScrollByteIntoView();
 		}
 
-		void InternalSelect(long start, long length)
+        private struct ColorRange
+        {
+            public long byteStart;
+            public long byteEnd;
+            public Color fg;
+            public Color bg;
+        }
+        List<ColorRange> colorRanges = new List<ColorRange>();
+
+        public void resetRangeColors()
+        {
+            colorRanges.Clear();
+        }
+
+        public void setRangeColor(long start, long end, Color fg, Color bg)
+        {
+            ColorRange c = new ColorRange();
+            c.byteStart = start;
+            c.byteEnd = end;
+            c.fg = fg;
+            c.bg = bg;
+            colorRanges.Add(c);
+        }
+
+
+        void InternalSelect(long start, long length)
 		{
 			long pos = start;
 			long sel = length;
@@ -2455,13 +2480,13 @@ namespace Be.Windows.Forms
 
 				bool isSelectedByte = i >= _bytePos && i <= (_bytePos + _selectionLength - 1) && _selectionLength != 0;
 
-				if (isSelectedByte && isKeyInterpreterActive)
+                if (isSelectedByte && isKeyInterpreterActive)
 				{
 					PaintHexStringSelected(g, b, selBrush, selBrushBack, gridPoint);
 				}
 				else
 				{
-					PaintHexString(g, b, brush, gridPoint);
+                    PaintHexString(g, b, brush, gridPoint);
 				}
 			}
 		}
@@ -2532,7 +2557,25 @@ namespace Be.Windows.Forms
 				}
 				else
 				{
-					PaintHexString(g, b, brush, gridPoint);
+                    ColorRange? cr = null;
+                    for (int ci = 0; ci < colorRanges.Count; ci++)
+                    {
+                        if (i >= colorRanges[ci].byteStart && i <= colorRanges[ci].byteEnd)
+                        {
+                            cr = colorRanges[ci];
+                            break;
+                        }
+                    }
+                    if (cr.HasValue)
+                    {
+                        Brush bFg = new SolidBrush(cr.Value.fg);
+                        Brush bBg = new SolidBrush(cr.Value.bg);
+                        PaintHexStringSelected(g, b, bFg, bBg, gridPoint);
+                    }
+                    else
+                    {
+                        PaintHexString(g, b, brush, gridPoint);
+                    }
 				}
 
 				string s = new String(ByteCharConverter.ToChar(b), 1);

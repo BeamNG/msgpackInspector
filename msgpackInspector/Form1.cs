@@ -78,6 +78,7 @@ namespace msgpackinspector
 
             int i = 0;
             long pos = 0;
+            Random r = new Random();
             while (true) {
 
                 if(!u.Read()) {
@@ -87,14 +88,17 @@ namespace msgpackinspector
                 var o = u.LastReadData;
                 if (o.IsNil) break;
 
-                Debug.WriteLine(o.UnderlyingType);
+                //Debug.WriteLine(o.UnderlyingType);
 
-                TreeData t = new TreeData();
-                t.byteStart = pos;
-                t.byteEnd = newPos;
-                t.mpo = o;
+                TreeData td = new TreeData();
+                td.byteStart = pos;
+                td.byteEnd = newPos;
+                td.mpo = o;
 
-                entries[i.ToString()] = t;
+                hexBox1.setRangeColor(td.byteStart, td.byteEnd, Color.Black, Color.FromArgb(r.Next(150, 256), r.Next(150, 256), r.Next(150, 256)));
+
+
+                entries[i.ToString()] = td;
                 treeView1.Nodes.Add(i.ToString(), i.ToString() + " - " + o.UnderlyingType.ToString().Replace("System.", ""));
                 i++;
                 pos = u.Offset;
@@ -135,6 +139,8 @@ namespace msgpackinspector
             lblinterp.Text = s;
 
             hexBox1.Select(td.byteStart, td.byteEnd - td.byteStart);
+            hexBox1.ScrollByteIntoView(td.byteStart);
+            hexBox1.Invalidate();
         }
     }
 }
