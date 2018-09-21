@@ -4,7 +4,7 @@ Small C# utility that lets you inspect binary files that were written with [Mess
 
 ![Preview1](./preview.png)
 
-# [Download](https://github.com/BeamNG/msgpackInspector/releases/download/1.1/MsgPackInspector-1.1.zip)
+# [Download](https://github.com/BeamNG/msgpackInspector/releases/download/1.1/MsgPackInspector-1.1.zip) (for windows)
 
 # Libraries / Acknowledgements
  * Developed with .net framework 4.6.1
