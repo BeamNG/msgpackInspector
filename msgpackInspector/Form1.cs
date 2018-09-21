@@ -32,11 +32,23 @@ namespace msgpackinspector
         Dictionary<string, TreeData> entries = new Dictionary<string, TreeData>();
 
         byte[] buffer;
+        TreeData? currentSelection;
+        private bool ignoreSelect = false;
+
+        public void reset()
+        {
+            buffer = new byte[0];
+            treeView1.Nodes.Clear();
+            entries.Clear();
+            hexBox1.Clear();
+            currentSelection = null;
+            toolStripStatusLabel1.Text = "";
+            lblinterp.Text = "";
+        }
 
         private void openFile(string filename)
         {
-            treeView1.Nodes.Clear();
-
+            reset();
             using (FileStream fs = File.OpenRead(filename))
             {
                 buffer = new byte[fs.Length];
@@ -95,13 +107,20 @@ namespace msgpackinspector
                 td.byteEnd = newPos;
                 td.mpo = o;
 
-                hexBox1.setRangeColor(td.byteStart, td.byteEnd, Color.Black, Color.FromArgb(r.Next(150, 256), r.Next(150, 256), r.Next(150, 256)));
+                Color bgc = Color.FromArgb(r.Next(150, 256), r.Next(150, 256), r.Next(150, 256));
+                hexBox1.setRangeColor(td.byteStart, td.byteEnd, Color.Black, bgc);
 
 
                 entries[i.ToString()] = td;
                 treeView1.Nodes.Add(i.ToString(), i.ToString() + " - " + o.UnderlyingType.ToString().Replace("System.", ""));
+
+                //treeView1.Nodes[treeView1.Nodes.Count - 1].BackColor = bgc;
+
                 i++;
                 pos = u.Offset;
+            }
+            if (treeView1.Nodes.Count > 0) {
+                treeView1.SelectedNode = treeView1.Nodes[0];
             }
             toolStripStatusLabel1.Text = "Loaded file " + filename + " with " + i.ToString() + " entries";
         }
@@ -118,8 +137,6 @@ namespace msgpackinspector
             Application.Exit();
         }
 
-        private bool ignoreSelect = false;
-
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             //Debug.WriteLine(e.Node.Name);
@@ -130,6 +147,9 @@ namespace msgpackinspector
                 return;
             }
 
+            currentSelection = td;
+
+            btnSaveAsFile.Visible = false;
             string s = "Element " + e.Node.Name + " - ";
             if (td.mpo.UnderlyingType == typeof(System.Int32))
             {
@@ -137,6 +157,7 @@ namespace msgpackinspector
                 s += string.Format("Int32 :  0x{0:X2} : {0:d}", i);
             } else if (td.mpo.UnderlyingType == typeof(byte[])) {
                 s += string.Format("Buffer:  0x{0:X4} to 0x{1:X4} [{2:d} bytes]", td.byteStart, td.byteEnd, td.byteEnd - td.byteStart);
+                btnSaveAsFile.Visible = true;
             }
             else
             {
@@ -160,7 +181,7 @@ namespace msgpackinspector
             long pos = hexBox1.SelectionStart;
             foreach (KeyValuePair<string, TreeData> en in entries)
             {
-                if(pos >= en.Value.byteStart && pos <= en.Value.byteEnd)
+                if(pos >= en.Value.byteStart && pos < en.Value.byteEnd)
                 {
                     ignoreSelect = true;
                     if (treeView1.SelectedNode != null)
@@ -188,14 +209,20 @@ namespace msgpackinspector
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            entries.Clear();
-            treeView1.Nodes.Clear();
-            hexBox1.Clear();
+            reset();
             toolStripStatusLabel1.Text = "Closed file";
         }
 
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        private void btnSaveAsFile_Click(object sender, EventArgs e)
         {
+            if (!currentSelection.HasValue) return;
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                using (FileStream fs = File.OpenWrite(saveFileDialog1.FileName))
+                {
+                    fs.Write(buffer, (int)currentSelection.Value.byteStart, (int)(currentSelection.Value.byteEnd - currentSelection.Value.byteStart));
+                }
+            }
 
         }
     }

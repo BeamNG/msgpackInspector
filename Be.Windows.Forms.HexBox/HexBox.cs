@@ -2567,7 +2567,7 @@ namespace Be.Windows.Forms
                     ColorRange? cr = null;
                     for (int ci = 0; ci < colorRanges.Count; ci++)
                     {
-                        if (i >= colorRanges[ci].byteStart && i <= colorRanges[ci].byteEnd)
+                        if (i >= colorRanges[ci].byteStart && i < colorRanges[ci].byteEnd)
                         {
                             cr = colorRanges[ci];
                             break;
