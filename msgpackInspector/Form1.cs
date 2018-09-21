@@ -22,6 +22,7 @@ namespace msgpackinspector
             InitializeComponent();
         }
 
+        // this struct stores the msg deserialized data in memory
         private struct TreeData
         {
             public int id;
@@ -30,13 +31,16 @@ namespace msgpackinspector
             public MessagePackObject mpo;
         }
 
+        // map to get from string id to treedata entry for the treeview
         Dictionary<string, TreeData> entries = new Dictionary<string, TreeData>();
 
-        byte[] buffer;
-        TreeData? currentSelection;
-        private bool ignoreSelect = false;
-        string windowTitle = "MessagePack Inspector 1.0";
+        byte[] buffer; // the file buffer - loaded in memory
+        TreeData? currentSelection; // currently selected element
 
+        string windowTitle = "MessagePack Inspector 1.0"; // default window title
+        private bool ignoreSelect = false; // internal usage: prevent events recursively firing
+
+        // resets the data visible
         public void reset()
         {
             buffer = new byte[0];
@@ -49,6 +53,7 @@ namespace msgpackinspector
             Text = windowTitle;
         }
 
+        // reads a messagepack file
         private void openFile(string filename)
         {
             reset();
@@ -57,27 +62,7 @@ namespace msgpackinspector
                 using (FileStream fs = File.OpenRead(filename))
                 {
                     buffer = new byte[fs.Length];
-
-                    byte[] bufMagic = new byte[3];
-                    fs.Read(bufMagic, 0, 3);
-                    if (bufMagic[0] == 'C' && bufMagic[1] == 'M' && bufMagic[2] == 'E')
-                    {
-                        /*
-                         // TODO: FIXME
-                        var output = new MemoryStream();
-                        using (DeflateStream s = new DeflateStream(fs, CompressionMode.Decompress))
-                        {
-                            s.CopyTo(output);
-                        }
-                        output.Read(buffer, 0, (int)output.Length);
-                        */
-                    }
-                    else
-                    {
-                        // uncompressed, raw, read from start
-                        fs.Seek(0, SeekOrigin.Begin);
-                        fs.Read(buffer, 0, (int)fs.Length);
-                    }
+                    fs.Read(buffer, 0, (int)fs.Length);
                 }
             } catch
             {
@@ -96,16 +81,11 @@ namespace msgpackinspector
                 toolStripStatusLabel1.Text = "File is empty!";
                 return;
             }
-//             if (hexBox1.ByteProvider != null) {
-//                 IDisposable byteProvider = hexBox1.ByteProvider as IDisposable;
-//                 if (byteProvider != null)
-//                     byteProvider.Dispose();
-//                 hexBox1.ByteProvider = null;
-//             }
-            hexBox1.ByteProvider = new Be.Windows.Forms.DynamicByteProvider(buffer);
 
             try
             {
+                hexBox1.ByteProvider = new Be.Windows.Forms.DynamicByteProvider(buffer); // sets the data in the hexedit control
+
                 ByteArrayUnpacker u = Unpacker.Create(buffer);
 
                 int i = 0;
@@ -113,8 +93,7 @@ namespace msgpackinspector
                 Random r = new Random();
                 while (true)
                 {
-
-                    if (!u.Read())
+                    if (!u.Read()) // reads the next item
                     {
                         break;
                     }
@@ -122,22 +101,19 @@ namespace msgpackinspector
                     var o = u.LastReadData;
                     if (o.IsNil) break;
 
-                    //Debug.WriteLine(o.UnderlyingType);
-
                     TreeData td = new TreeData();
                     td.id = i;
                     td.byteStart = pos;
                     td.byteEnd = newPos;
                     td.mpo = o;
 
+                    // create a random color for the hexeditor
                     Color bgc = Color.FromArgb(r.Next(150, 256), r.Next(150, 256), r.Next(150, 256));
                     hexBox1.setRangeColor(td.byteStart, td.byteEnd, Color.Black, bgc);
 
-
+                    // store it and create the treenode
                     entries[i.ToString()] = td;
                     treeView1.Nodes.Add(i.ToString(), string.Format("{0:d3}", i) + " - " + o.UnderlyingType.ToString().Replace("System.", ""));
-
-                    //treeView1.Nodes[treeView1.Nodes.Count - 1].BackColor = bgc;
 
                     i++;
                     pos = u.Offset;
@@ -150,21 +126,9 @@ namespace msgpackinspector
             } catch { }
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                openFile(openFileDialog1.FileName);
-            }
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
+        // select a new element in the treeview - update data everywhere
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            //Debug.WriteLine(e.Node.Name);
             TreeData td = entries[e.Node.Name];
             if (td.mpo.IsNil)
             {
@@ -188,6 +152,8 @@ namespace msgpackinspector
             {
                 s += td.mpo.UnderlyingType.ToString().Replace("System.", "") + ": " + td.mpo.ToString();
             }
+            // TODO: add more UnderlyingType variations
+
             lblinterp.Text = s;
 
             updateStatusbar(false);
@@ -202,16 +168,19 @@ namespace msgpackinspector
             //hexBox1.Invalidate();
         }
 
+        // fired upon navigation in the hexedit control
         private void hexBox1_SelectionLengthChanged(object sender, EventArgs e)
         {
             if (ignoreSelect) return;
             updateStatusbar(true);
         }
 
+        // selects new element via the hexedit control
         private void hexBox1_SelectionStartChanged(object sender, EventArgs e)
         {
             if (ignoreSelect) return;
             updateStatusbar(true);
+            // find the element that fits to the selection
             long pos = hexBox1.SelectionStart;
             foreach (KeyValuePair<string, TreeData> en in entries)
             {
@@ -232,6 +201,7 @@ namespace msgpackinspector
             }
         }
 
+        // resets node colors
         private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
             if (treeView1.SelectedNode != null)
@@ -241,12 +211,7 @@ namespace msgpackinspector
             }
         }
 
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            reset();
-            toolStripStatusLabel1.Text = "Closed file";
-        }
-
+        // save binary file button click
         private void btnSaveAsFile_Click(object sender, EventArgs e)
         {
             if (!currentSelection.HasValue) return;
@@ -260,6 +225,7 @@ namespace msgpackinspector
 
         }
 
+        // updates the text in the status bar
         private void updateStatusbar(bool showSelection)
         {
             if (!currentSelection.HasValue) return;
@@ -278,9 +244,33 @@ namespace msgpackinspector
             toolStripStatusLabel1.Text = st;
         }
 
+        // File > About Menu
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/BeamNG/msgpackInspector");
         }
+
+        // File > Open Menu
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                openFile(openFileDialog1.FileName);
+            }
+        }
+
+        // File > close Menu
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            reset();
+            toolStripStatusLabel1.Text = "Closed file";
+        }
+
+        // File > Exit Menu
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
     }
 }
