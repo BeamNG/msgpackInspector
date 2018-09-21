@@ -167,11 +167,11 @@
             // 
             // btnSaveAsFile
             // 
-            this.btnSaveAsFile.Location = new System.Drawing.Point(251, 84);
+            this.btnSaveAsFile.Location = new System.Drawing.Point(204, 80);
             this.btnSaveAsFile.Name = "btnSaveAsFile";
-            this.btnSaveAsFile.Size = new System.Drawing.Size(114, 23);
+            this.btnSaveAsFile.Size = new System.Drawing.Size(153, 27);
             this.btnSaveAsFile.TabIndex = 7;
-            this.btnSaveAsFile.Text = "Save as file";
+            this.btnSaveAsFile.Text = "Save binary as file";
             this.btnSaveAsFile.UseVisualStyleBackColor = true;
             this.btnSaveAsFile.Visible = false;
             this.btnSaveAsFile.Click += new System.EventHandler(this.btnSaveAsFile_Click);
