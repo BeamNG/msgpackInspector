@@ -17,11 +17,6 @@ namespace msgpackinspector
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
         // this struct stores the msg deserialized data in memory
         private struct TreeData
         {
@@ -37,8 +32,14 @@ namespace msgpackinspector
         byte[] buffer; // the file buffer - loaded in memory
         TreeData? currentSelection; // currently selected element
 
-        string windowTitle = "MessagePack Inspector 1.0"; // default window title
+        string windowTitle = "MessagePack Inspector v1.1"; // default window title
         private bool ignoreSelect = false; // internal usage: prevent events recursively firing
+
+        public Form1()
+        {
+            InitializeComponent();
+            Text = windowTitle;
+        }
 
         // resets the data visible
         public void reset()
