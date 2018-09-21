@@ -4,7 +4,7 @@ Small C# utility that lets you inspect binary files that were written with [Mess
 
 ![Preview1](./preview.png)
 
-# [Download](https://github.com/BeamNG/msgpackInspector/releases)
+# [Download](https://github.com/BeamNG/msgpackInspector/releases/download/1.0/msgpackInspector-1.0.zip)
 
 # Libraries / Acknowledgements
  * Customized [Be.HexEditor](https://sourceforge.net/projects/hexbox/) - HexEdit Control. MIT license
