@@ -35,6 +35,7 @@ namespace msgpackinspector
         byte[] buffer;
         TreeData? currentSelection;
         private bool ignoreSelect = false;
+        string windowTitle = "MessagePack Inspector 1.0";
 
         public void reset()
         {
@@ -45,6 +46,7 @@ namespace msgpackinspector
             currentSelection = null;
             toolStripStatusLabel1.Text = "";
             lblinterp.Text = "";
+            Text = windowTitle;
         }
 
         private void openFile(string filename)
@@ -82,6 +84,12 @@ namespace msgpackinspector
                 MessageBox.Show("Unable to load file: " + filename);
                 return;
             }
+
+            try
+            {
+                Text = windowTitle + " - " + Path.GetFileName(filename);
+            }
+            catch { }
 
             if (buffer.Length == 0)
             {
