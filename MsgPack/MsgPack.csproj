@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{5BCEC32E-990E-4DE5-945F-BD27326A7418}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>MsgPack</AssemblyName>
+    <TargetFrameworks>net46;net35;net45</TargetFrameworks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NuspecFile>$(SolutionDir)/msgpack.nuspec</NuspecFile>
+  </PropertyGroup>
+  <Import Project="MsgPack.Common.props" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>bin</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' != 'Release'">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'uap10.0' and '$(TargetFramework)' != 'netstandard1.1' and '$(TargetFramework)' != 'netstandard1.3' and '$(TargetFramework)' != 'netstandard2.0'">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" Condition="'$(TargetFramework)' != 'net35'" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1' or '$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="System.Collections" Version="4.0.11" />
+    <PackageReference Include="System.Collections.Concurrent" Version="4.0.12" />
+    <PackageReference Include="System.Diagnostics.Contracts" Version="4.0.1" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.0.11" />
+    <PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
+    <PackageReference Include="System.Globalization" Version="4.0.11" />
+    <PackageReference Include="System.IO" Version="4.1.0" />
+    <PackageReference Include="System.Linq" Version="4.1.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.1.1" />
+    <PackageReference Include="System.ObjectModel" Version="4.0.12" />
+    <PackageReference Include="System.Reflection" Version="4.1.0" />
+    <PackageReference Include="System.Reflection.Extensions" Version="4.0.1" />
+    <PackageReference Include="System.Reflection.Primitives" Version="4.0.1" />
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.0.1" />
+    <PackageReference Include="System.Runtime" Version="4.1.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.1.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.1.0" />
+    <PackageReference Include="System.Runtime.Numerics" Version="4.0.1" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
+    <PackageReference Include="System.Text.Encoding" Version="4.0.11" />
+    <PackageReference Include="System.Text.Encoding.Extensions" Version="4.0.11" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.1.0" />
+    <PackageReference Include="System.Threading" Version="4.0.11" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3' or '$(TargetFramework)' == 'uap10.0'">
+    <PackageReference Include="System.Collections.NonGeneric" Version="4.0.1" />
+    <PackageReference Include="System.Collections.Specialized" Version="4.0.1" />
+    <PackageReference Include="System.Data.Common" Version="4.1.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="System.Reflection.Emit" Version="4.0.1" />
+    <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="NETStandard.Library" Version="2.0.0" />
+    <PackageReference Include="System.CodeDom" Version="4.4.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsXamarin)' == 'true'">
+    <PackageReference Include="NETStandard.Library" Version="2.0.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="ByteArrayPackerWriter.TypedWrite.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ByteArrayPackerWriter.TypedWrite.tt</DependentUpon>
+    </Compile>
+    <Compile Update="MessagePackByteArrayPacker.Pack.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagePackByteArrayPacker.Pack.tt</DependentUpon>
+    </Compile>
+    <Compile Update="MessagePackByteArrayUnpacker.Unpack.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagePackByteArrayUnpacker.Unpack.tt</DependentUpon>
+    </Compile>
+    <Compile Update="MessagePackStreamPacker.Pack.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagePackStreamPacker.Pack.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DefaultStreamUnpacker.Unpacking.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DefaultStreamUnpacker.Unpacking.tt</DependentUpon>
+    </Compile>
+    <Compile Update="StreamPackerWriter.TypedWrite.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StreamPackerWriter.TypedWrite.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Unpacker.Unpacking.cs">
+      <DependentUpon>Unpacker.Unpacking.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="MessagePackStreamUnpacker.Unpack.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagePackStreamUnpacker.Unpack.tt</DependentUpon>
+    </Compile>
+    <Compile Update="MessagePackUnpacker.Read.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagePackUnpacker.Read.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Packer.Packing.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Packer.Packing.tt</DependentUpon>
+    </Compile>
+    <Compile Update="PackerUnpackerExtensions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PackerUnpackerExtensions.tt</DependentUpon>
+    </Compile>
+    <Compile Update="MessagePackObject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessagePackObject.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Packer.Nullable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Packer.Nullable.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\DefaultSerializers\ArraySerializer.Primitives.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArraySerializer.Primitives.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\DefaultSerializers\SimdTypeSerializers.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimdTypeSerializers.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\MessagePackRuntimeTypeAttributes.cs">
+      <DependentUpon>MessagePackRuntimeTypeAttributes.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Serialization\MessagePackKnownTypeAttributes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessagePackKnownTypeAttributes.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\TeeTextWriter.cs">
+      <DependentUpon>TeeTextWriter.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Serialization\PackHelperParameters.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PackHelperParameters.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\NullTextWriter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NullTextWriter.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\DefaultSerializers\DefaultSerializers.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultSerializers.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\Metadata\_UnpackHelpers.direct.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_UnpackHelpers.direct.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\SerializerRepository.defaults.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SerializerRepository.defaults.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\UnpackHelperParameters.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnpackHelperParameters.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\UnpackHelpers.facade.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnpackHelpers.facade.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Serialization\UnpackHelpers.direct.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnpackHelpers.direct.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Unpacker.Leaf.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Unpacker.Leaf.tt</DependentUpon>
+    </Compile>
+    <Compile Update="ByteArrayUnpackerReader.TypedRead.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ByteArrayUnpackerReader.TypedRead.tt</DependentUpon>
+    </Compile>
+    <Compile Update="UnpackerReader.TypedRead.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UnpackerReader.TypedRead.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Unpacking.Numerics.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Unpacking.Numerics.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Unpacking.Others.cs">
+      <DependentUpon>Unpacking.Others.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="MessagePackUnpacker`1.Skipping.cs">
+      <DependentUpon>MessagePackUnpacker`1.Skipping.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="SubtreeUnpacker.Unpacking.cs">
+      <DependentUpon>SubtreeUnpacker.Unpacking.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MessagePackByteArrayUnpacker.Unpack.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagePackByteArrayUnpacker.Unpack.tt</DependentUpon>
+    </None>
+    <None Update="MessagePackByteArrayPacker.Pack.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackByteArrayPacker.Pack.cs</LastGenOutput>
+    </None>
+    <None Update="MessagePackByteArrayUnpacker.Unpack.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackByteArrayUnpacker.Unpack.cs</LastGenOutput>
+    </None>
+    <None Update="MessagePackStreamPacker.Pack.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackStreamPacker.Pack.cs</LastGenOutput>
+    </None>
+    <None Update="MessagePackUnpacker.Read.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackUnpacker.Read.cs</LastGenOutput>
+    </None>
+    <None Update="Packer.Leaf.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Packer.Leaf.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\DefaultSerializers\DefaultSerializers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DefaultSerializers.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\DefaultSerializers\ArraySerializer.Primitives.tt">
+      <LastGenOutput>ArraySerializer.Primitives.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Serialization\MessagePackRuntimeTypeAttributes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackRuntimeTypeAttributes.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\MessagePackKnownTypeAttributes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackKnownTypeAttributes.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\Metadata\_UnpackHelpers.direct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>_UnpackHelpers.direct.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\SerializerRepository.defaults.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SerializerRepository.defaults.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\UnpackHelpers.direct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UnpackHelpers.direct.cs</LastGenOutput>
+    </None>
+    <None Update="DefaultStreamUnpacker.Unpacking.tt">
+      <LastGenOutput>DefaultStreamUnpacker.Unpacking.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="ByteArrayPackerWriter.TypedWrite.tt">
+      <LastGenOutput>ByteArrayPackerWriter.TypedWrite.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="StreamPackerWriter.TypedWrite.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StreamPackerWriter.TypedWrite.cs</LastGenOutput>
+    </None>
+    <None Update="Unpacker.Leaf.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Unpacker.Leaf.cs</LastGenOutput>
+    </None>
+    <None Update="MessagePackStreamUnpacker.Unpack.tt">
+      <LastGenOutput>MessagePackStreamUnpacker.Unpack.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="ByteArrayUnpackerReader.TypedRead.tt">
+      <LastGenOutput>ByteArrayUnpackerReader.TypedRead.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="UnpackerReader.TypedRead.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UnpackerReader.TypedRead.cs</LastGenOutput>
+    </None>
+    <None Update="Unpacking.Numerics.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Unpacking.Numerics.cs</LastGenOutput>
+    </None>
+    <None Update="Unpacking.Others.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Unpacking.Others.cs</LastGenOutput>
+    </None>
+    <None Update="MessagePackObject.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackObject.cs</LastGenOutput>
+    </None>
+    <None Update="Packer.Nullable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Packer.Nullable.cs</LastGenOutput>
+    </None>
+    <None Update="Unpacker.Unpacking.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Unpacker.Unpacking.cs</LastGenOutput>
+    </None>
+    <None Update="MessagePackUnpacker`1.Skipping.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MessagePackUnpacker`1.Skipping.cs</LastGenOutput>
+    </None>
+    <None Update="SubtreeUnpacker.Unpacking.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SubtreeUnpacker.Unpacking.cs</LastGenOutput>
+    </None>
+    <None Update="Packer.Packing.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Packer.Packing.cs</LastGenOutput>
+    </None>
+    <None Update="PackerUnpackerExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PackerUnpackerExtensions.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\TeeTextWriter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TeeTextWriter.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\NullTextWriter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NullTextWriter.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\PackHelperParameters.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PackHelperParameters.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\UnpackHelperParameters.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UnpackHelperParameters.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\UnpackHelpers.facade.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UnpackHelpers.facade.cs</LastGenOutput>
+    </None>
+    <None Update="Serialization\DefaultSerializers\SimdTypeSerializers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SimdTypeSerializers.cs</LastGenOutput>
+    </None>
+    <None Include="Unpacking.ttinclude" />
+    <None Include="remarks.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="AsyncReadResult.cs" />
+    <Compile Remove="AsyncReadResult`1.cs" />
+    <Compile Remove="TaskAugument.cs" />
+    <Compile Remove="BufferedStream.cs" />
+    <Compile Remove="MPContract.cs" />
+    <Compile Remove="NetStandardCompatibility.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net35'">
+    <Compile Remove="Serialization\AbstractSerializers\SerializerBuilder`2.Tuple.cs" />
+    <Compile Remove="Serialization\CollectionSerializers\ReadOnlyCollectionMessagePackSerializer`2.cs" />
+    <Compile Remove="Serialization\CollectionSerializers\ReadOnlyDictionaryMessagePackSerializer`3.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\AbstractReadOnlyCollectionMessagePackSerializer`2.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\AbstractReadOnlyDictionaryMessagePackSerializer`3.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\FSharpCollectionSerializer`2.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\FSharpMapSerializer`3.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\ImmutableCollectionSerializer`2.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\ImmutableDictionarySerializer`3.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\ImmutableStackSerializer`2.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\SimdTypeSerializers.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\System_Numerics_ComplexMessagePackSerializer.cs" />
+    <Compile Remove="Serialization\DefaultSerializers\System_Security_Cryptography_HashAlgorithmNameMessagePackSerializer.cs" />
+    <Compile Remove="Serialization\EmittingSerializers\CallbackReadOnlyCollectionMessagePackSerializer`2.cs" />
+    <Compile Remove="Serialization\EmittingSerializers\CallbackReadOnlyDictionaryMessagePackSerializer`3.cs" />
+    <Compile Remove="Serialization\Metadata\_Type.cs" />
+    <Compile Remove="Serialization\ReflectionSerializers\ReflectionTupleMessagePackSerializer`1.cs" />
+    <Compile Remove="TupleItems.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'net35'">
+    <Compile Remove="Contract.cs" />
+    <Compile Remove="Delegates.cs" />
+    <Compile Remove="NetFxCompatibilities.cs" />
+    <Compile Remove="Volatile.cs" />
+    <Compile Remove="Tuple`n.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <Compile Remove="Serialization\DefaultSerializers\SimdTypeSerializers.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'netstandard1.1' or '$(TargetFramework)' == 'netstandard1.3'">
+    <Compile Remove="Serialization\DefaultSerializers\System_Security_Cryptography_HashAlgorithmNameMessagePackSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'uap10.0'">
+    <Compile Remove="UnsafeNativeMethods.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1' or '$(TargetFramework)' == 'netstandard1.3' or '$(TargetFramework)' == 'uap10.0'">
+    <Compile Include="BufferedStream.cs" />
+    <Compile Include="NetStandardCompatibility.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(FeatureEmit)' != 'true'">
+    <Compile Remove="Serialization\AbstractSerializers\**\*.*" />
+    <Compile Remove="Serialization\DefaultSerializers\System_Security_Cryptography_HashAlgorithmNameMessagePackSerializer.cs" />
+    <Compile Remove="Serialization\EmittingSerializers\**\*.*" />
+    <Compile Remove="Serialization\Metadata\_CultureInfo.cs" />
+    <Compile Remove="Serialization\Metadata\_DateTimeMessagePackSerializerHelpers.cs" />
+    <Compile Remove="Serialization\Metadata\_Decimal.cs" />
+    <Compile Remove="Serialization\Metadata\_DictionaryEntry.cs" />
+    <Compile Remove="Serialization\Metadata\_EnumMessagePackSerializerHelpers.cs" />
+    <Compile Remove="Serialization\Metadata\_FieldInfo.cs" />
+    <Compile Remove="Serialization\Metadata\_IDictionaryEnumerator.cs" />
+    <Compile Remove="Serialization\Metadata\_IDisposable.cs" />
+    <Compile Remove="Serialization\Metadata\_IEnumreator.cs" />
+    <Compile Remove="Serialization\Metadata\_MessagePackObject.cs" />
+    <Compile Remove="Serialization\Metadata\_MethodBase.cs" />
+    <Compile Remove="Serialization\Metadata\_Object.cs" />
+    <Compile Remove="Serialization\Metadata\_Packer.cs" />
+    <Compile Remove="Serialization\Metadata\_String.cs" />
+    <Compile Remove="Serialization\Metadata\_Unpacker.cs" />
+    <Compile Remove="Serialization\Metadata\_UnpackHelpers.cs" />
+    <Compile Remove="Serialization\Metadata\_UnpackHelpers.direct.cs" />
+    <Compile Remove="Serialization\Reflection\TracingILGenerator*.cs" />
+    <Compile Remove="Serialization\ReflectionExtensions.ConstructorDelegate.cs" />
+    <Compile Remove="Serialization\NullTextWriter.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(FeatureCodeGen)' != 'true'">
+    <Compile Remove="Serialization\AbstractSerializers\ISerializerCodeGenerator.cs" />
+    <Compile Remove="Serialization\AbstractSerializers\ISerializerCodeGenerationContext.cs" />
+    <Compile Remove="Serialization\CodeDomSerializers\*.*" />
+    <Compile Remove="Serialization\CodeGenerationSink.cs" />
+    <Compile Remove="Serialization\DependentAssemblyManager.cs" />
+    <Compile Remove="Serialization\IndividualFileCodeGenerationSink.cs" />
+    <Compile Remove="Serialization\ISerializerGeneratorConfiguration.cs" />
+    <Compile Remove="Serialization\SerializerAssemblyGenerationConfiguration.cs" />
+    <Compile Remove="Serialization\SerializerCodeGenerationConfiguration.cs" />
+    <Compile Remove="Serialization\SerializerCodeInformation.cs" />
+    <Compile Remove="Serialization\SerializerCodeGenerationContext.cs" />
+    <Compile Remove="Serialization\SerializerCodeGenerationResult.cs" />
+    <Compile Remove="Serialization\SerializerGenerator.cs" />
+    <Compile Remove="Serialization\SingleTextWriterCodeGenerationSink.cs" />
+    <Compile Remove="Serialization\TeeTextWriter.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(FeatureAsmGen)' != 'true'">
+    <Compile Remove="Serialization\EmittingSerializers\AssemblyBuilderCodeGenerationContext.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(FeatureTap)' == 'true'">
+    <Compile Include="AsyncReadResult.cs" />
+    <Compile Include="AsyncReadResult`1.cs" />
+    <Compile Include="TaskAugument.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <!-- Platform specific imports -->
+  <PropertyGroup Condition="'$(VsInstallRoot)' != ''">
+    <!-- For VS, use $(MSBuildExtensionsPath) -->
+    <VSMSBuildExtensionsPath>$(MSBuildExtensionsPath)</VSMSBuildExtensionsPath>
+  </PropertyGroup>
+</Project>
