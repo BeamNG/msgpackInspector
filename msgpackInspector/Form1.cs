@@ -237,7 +237,7 @@ namespace msgpackinspector
             {
                 st += string.Format("Selection: 0x{0:X5} > 0x{1:X5}, size: {2:d4} bytes", hexBox1.SelectionStart, hexBox1.SelectionStart + hexBox1.SelectionLength, hexBox1.SelectionLength);
             }
-            else if (hexBox1.SelectionLength == 0)
+            else if (hexBox1.SelectionLength <= 1)
             {
                 st += string.Format("Selection: 0x{0:X5}", hexBox1.SelectionStart);
             }
